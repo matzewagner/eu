@@ -47,9 +47,62 @@ fn sum_divisible_by(N: u32, m: u32) -> u32 {
 
 fn eu_2() {
     let N = 4000000;
-    fib(N);
+    println!("Fibonacci for N = {}, sum of even terms is: {}", N, fib(N));
 }
 
 fn fib(N: u32) -> u32 {
-    0
+    // Iterative:
+    // let mut curr = 1;
+    // let mut prev = 1;
+    // let mut sum;
+    // let mut total = 0;
+    // loop {
+    //     sum = curr + prev;
+    //     prev = curr;
+    //     curr = sum;
+    //     if sum > N {
+    //         break;
+    //     }
+    //     if curr % 2 == 0 {
+    //         total += curr;
+    //     }
+    // }
+
+    // Recursive:
+    // let mut total = 0;
+    // let mut i = 0;
+    // loop {
+    //     if total > N {
+    //         break;
+    //     }
+
+    //     let fib = fib_recursive(i);
+    //     if fib % 2 == 0 {
+    //         total += fib;
+    //     }
+    //     i += 1;
+    // }
+
+    // Iterative, without % check
+    let mut curr = 1;
+    let mut prev = 1;
+    let mut sum = curr + prev;
+    let mut total = 0; // sum all even numbered terms
+    loop {
+        total = total + sum; // every 3rd term in fib is even
+        curr = prev + sum;
+        prev = sum + curr;
+        sum = curr + prev;
+        if sum > N {
+            break;
+        }
+    }
+    total
+}
+
+fn fib_recursive(num: u32) -> u32 {
+    match num {
+        0 | 1 => 1,
+        _ => fib_recursive(num - 1) + fib_recursive(num - 2),
+    }
 }
